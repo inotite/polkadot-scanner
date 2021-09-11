@@ -20,8 +20,8 @@ function App() {
       <ScanProvider>
         <Router>
           <Switch>
-            <Route path={Routes.Scan.path} component={ScanBlock} />
-            <Route path={Routes.Result.path} component={ScanResult} />
+            <Route exact path={Routes.Scan.path} component={ScanBlock} />
+            <Route exact path={Routes.Result.path} component={ScanResult} />
           </Switch>
         </Router>
       </ScanProvider>

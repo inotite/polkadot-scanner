@@ -1,6 +1,6 @@
 const Routes = {
   Scan: {
-    path: '/scan',
+    path: '/',
   },
   Result: {
     path: '/scan-result',

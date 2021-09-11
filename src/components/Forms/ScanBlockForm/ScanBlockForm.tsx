@@ -27,8 +27,16 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const validationSchema = yup.object({
-  startBlock: yup.number().required('Start Block is required'),
-  endBlock: yup.number().required('End Block is required'),
+  startBlock: yup.number()
+    .required('Start Block is required')
+    .positive()
+    .integer()
+    .lessThan(yup.ref('endBlock'), 'Start block should be less than end block.'),
+  endBlock: yup.number()
+    .required('End Block is required')
+    .positive()
+    .integer()
+    .moreThan(yup.ref('startBlock'), 'End Block should be bigger than start block.'),
   endpoint: yup.string().required('Endpoint is required')
 });
 
@@ -47,7 +55,7 @@ const ScanBlockForm: React.FC<ScanBlockFormInterface> = ({ onScan }) => {
   })
 
   return (
-    <Paper className={classes.formContainer}>
+    <Paper className={classes.formContainer} elevation={6}>
       <Typography className={classes.formTitle} align='center' variant='h5'>Scan Information</Typography>
       <form className={classes.form} onSubmit={formik.handleSubmit}>
         <TextField

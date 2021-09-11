@@ -52,20 +52,19 @@ interface Column {
 
 const columns: Column[] = [
   { id: 'blockNumber', numeric: false, label: 'Block Number' },
-  { id: 'blockHash', numeric: true, label: 'Block Hash' },
-  { id: 'event', numeric: true, label: 'Event' },
-  { id: 'arguments', numeric: true, label: 'Arguments' },
+  { id: 'blockHash', numeric: false, label: 'Block Hash' },
+  { id: 'event', numeric: false, label: 'Event' },
+  { id: 'arguments', numeric: false, label: 'Arguments' },
 ];
 
-interface EnhancedTableProps {
+interface ScanResultTableHeaderProps {
   classes: ReturnType<typeof useStyles>;
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof EventRecordInfo) => void;
   order: Order;
   orderBy: string;
 }
 
-function ScanResultTableHead(props: EnhancedTableProps) {
-  const { classes, order, orderBy, onRequestSort } = props;
+const ScanResultTableHeader: React.FC<ScanResultTableHeaderProps> = ({ classes, order, orderBy, onRequestSort }) => {
   const createSortHandler = (property: keyof EventRecordInfo) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
@@ -102,12 +101,12 @@ function ScanResultTableHead(props: EnhancedTableProps) {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: '100%',
       margin: theme.spacing(4),
     },
     paper: {
       width: '100%',
       marginBottom: theme.spacing(2),
+      paddingTop: theme.spacing(2),
     },
     table: {
       minWidth: 750,
@@ -144,9 +143,6 @@ const ScanResultTable: React.FC<ScanResultTableProps> = ({ loading, events }) =>
     setOrderBy(property);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-  };
-
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -168,16 +164,11 @@ const ScanResultTable: React.FC<ScanResultTableProps> = ({ loading, events }) =>
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} elevation={6}>
         <Typography variant='h5' align='center'>Events</Typography>
         <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size='medium'
-            aria-label="enhanced table"
-          >
-            <ScanResultTableHead
+          <Table className={classes.table} size='medium'>
+            <ScanResultTableHeader
               classes={classes}
               order={order}
               orderBy={orderBy}
@@ -189,16 +180,15 @@ const ScanResultTable: React.FC<ScanResultTableProps> = ({ loading, events }) =>
                 .map((record, index) =>
                   <TableRow
                     hover
-                    onClick={(ev) => handleClick(ev, record.blockHash)}
                     tabIndex={-1}
-                    key={index}
+                    key={`scan-result-table-${index}`}
                   >
                     <TableCell component="th" id={`scan-result-table-${index}`} scope="row">
                       {record.blockNumber}
                     </TableCell>
-                    <TableCell align="right">{record.blockHash}</TableCell>
-                    <TableCell align="right">{record.event}</TableCell>
-                    <TableCell align="right">{record.arguments}</TableCell>
+                    <TableCell>{record.blockHash}</TableCell>
+                    <TableCell>{record.event}</TableCell>
+                    <TableCell>{record.arguments}</TableCell>
                   </TableRow>
                 )}
               {emptyRows > 0 && (
