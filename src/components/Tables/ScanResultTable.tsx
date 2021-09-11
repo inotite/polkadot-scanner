@@ -101,7 +101,7 @@ const ScanResultTableHeader: React.FC<ScanResultTableHeaderProps> = ({ classes, 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      margin: theme.spacing(4),
+      width: '100%',
     },
     paper: {
       width: '100%',

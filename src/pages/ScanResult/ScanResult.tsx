@@ -11,8 +11,7 @@ import Routes from 'routes';
 
 const useStyles = makeStyles((theme: Theme) => ({
   scanResultContainer: {
-    width: '100%',
-    height: '100%',
+    padding: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
