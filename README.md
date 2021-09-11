@@ -15,6 +15,9 @@ You will also see any lint errors in the console.
 
 ## Run backend
 
+### `yarn build`
+Build the client app first.
+
 ### `yarn start`
 Runs the app with basic authentication.\
 Open [http://localhost:8000](http://localhost:8000) to view it in the browser.\
